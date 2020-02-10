@@ -13,7 +13,6 @@ const LoadingWrap = styled.View`
   justify-content: center;
   align-items: center;
   border-radius: 80px;
-  elevation: 3;
 `;
 
 const ButtonWrap = styled.View`
@@ -25,7 +24,6 @@ const ButtonWrap = styled.View`
   justify-content: center;
   align-items: center;
   border-radius: 80px;
-  elevation: 3;
 `;
 
 const ButtonText = styled.Text`
@@ -102,7 +100,6 @@ class RoundButton extends React.Component {
   }
 }
 
-
 RoundButton.defaultProps = {
   buttonColor: Colors.primaryColor,
   textColor: '#fff',
@@ -111,20 +108,5 @@ RoundButton.defaultProps = {
   disabled: false,
   small: false,
 };
-
-// RoundButton.propTypes = {
-//   small: PropTypes.bool,
-//   disabled: PropTypes.bool,
-//   buttonColor: PropTypes.string,
-//   textColor: PropTypes.string,
-//   loading: PropTypes.bool,
-//   title: PropTypes.string.isRequired,
-//   onPress: PropTypes.func.isRequired,
-//   style: PropTypes.shape({
-//     wrap: PropTypes.object,
-//     button: PropTypes.object,
-//     text: PropTypes.object,
-//   }),
-// };
 
 export default RoundButton;

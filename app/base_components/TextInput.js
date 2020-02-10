@@ -1,6 +1,10 @@
 import { Platform } from 'react-native';
 import styled from 'styled-components';
 
+/**
+ *  Componente para los input, NO recibe props
+ */
+
 const TextInput = styled.TextInput`
   font-family: 'Roboto Slab';
   padding: 15px;
@@ -11,6 +15,7 @@ const TextInput = styled.TextInput`
   text-align: left;
   border: 0 solid #ddd;
   border-bottom-width: ${Platform.OS === 'ios' ? '1px' : '0px'};
-  border-bottom-color: #ddd;
-  `;
+`;
+//border-bottom-color: #ddd;
+
 export default TextInput;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AppRouter from './router';
+import { AppRouter } from './router';
 
 import store, { persistor } from '../src/store/index';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -9,12 +9,13 @@ import LoadingView from './base_components/LoadingView';
 
 console.disableYellowBox = true;
 
-export default class App extends Component {
+export default class App extends React.Component {
+
     render() {
         return (
             <Provider store={store}>
               <PersistGate loading={<LoadingView />} persistor={persistor}>
-                <AppRouter />
+                <AppRouter  />
               </PersistGate>
             </Provider>
           );

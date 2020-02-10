@@ -1,17 +1,16 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { Actions } from 'react-native-router-flux';
 
-// ui components
+// Ui Components
 import AppBase from '../base_components/AppBase';
-import PrimaryText from '../base_components/PrimaryText';
-import BR from '../base_components/BR';
-import TextInput from '../base_components/TextInput';
-import RoundButton from '../base_components/RoundButton';
 import TextButton from '../base_components/TextButton';
+import TextInput from '../base_components/TextInput';
+import PrimaryText from '../base_components/PrimaryText';
+import RoundButton from '../base_components/RoundButton';
+import BR from '../base_components/BR';
 import Colors from '../../src/constants/colors';
 
 class LoginComponent extends Component {
@@ -61,11 +60,11 @@ class LoginComponent extends Component {
         <TextButton
           onPress={() => {
           }}
-          title="Forgot Password?"
+          title="Olvidaste tu contraseña?"
         />
         <BR />
         <RoundButton
-          title="Sign In"
+          title="Ingresa"
           disabled={disableLogin}
           loading={loading}
           onPress={onLoginSubmit}
@@ -74,7 +73,7 @@ class LoginComponent extends Component {
         <RoundButton
           primary
           buttonColor={Colors.blue}
-          title="Sign Up"
+          title="Registrate"
           onPress={() => Actions.signupScreen()}
         />
         <BR size={20} />

@@ -1,12 +1,8 @@
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Ripple from 'react-native-material-ripple';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Icon} from 'native-base';
-import PrimaryText from './PrimaryText';
-
 
 const RippleWrap = styled(Ripple)`
      padding: 8px 8px;
@@ -32,7 +28,7 @@ const RippleWrap = styled(Ripple)`
 const RippleIcon = ({
   name, onPress, type, size, color, rippleColor, style, dark, ...props
 }) => {
-  console.log(name, "name", onPress, "onpress", type, "type", size, "size", color, "color", rippleColor, "rippleColor", style, "style", dark, "dark");
+  // console.log(name, "name", onPress, "onpress", type, "type", size, "size", color, "color", rippleColor, "rippleColor", style, "style", dark, "dark");
   return  (
     <RippleWrap
       style={style}

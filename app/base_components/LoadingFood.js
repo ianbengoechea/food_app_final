@@ -1,10 +1,12 @@
 import React from 'react';
-import { Animated, Image, Text, View } from 'react-native';
-import PropTypes from 'prop-types';
+import { Animated, View } from 'react-native';
 
 import AppBase from './AppBase';
 import Assets from '../../src/constants/assets';
 
+/**
+ *  @{LoadingFood} componente animado para la carga de comidas
+ */
 
 class LoadingFood extends React.Component {
   constructor(props) {
@@ -73,6 +75,5 @@ class LoadingFood extends React.Component {
 }
 
 LoadingFood.propTypes = {};
-
 
 export default LoadingFood;

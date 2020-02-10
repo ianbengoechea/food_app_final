@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Dimensions, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import map from 'lodash/map';
+import styled from 'styled-components';
 import Modal from 'react-native-modalbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RadioButton, RadioGroup } from 'react-native-flexi-radio-button';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import map from 'lodash/map';
 
 import RoundButton from '../base_components/RoundButton';
 import BR from '../base_components/BR';
@@ -82,23 +82,24 @@ class FilterRadioModal extends Component {
   };
 
   render() {
-    console.log('EL MODAL ESTA ACA')
+
     const { filterData } = this.state;
     const { heading } = this.props;
 
     return (
+
       <Modal
         ref={this.props.pRef}
         swipeToClose={this.state.swipeToClose}
         onClosed={this.onClose}
         onOpened={this.onOpen}
         position="center"
-        style={{
-          justifyContent: 'flex-start',
-        }}
+        style={{ justifyContent: 'flex-start'}}
         onClosingState={this.onClosingState}
       >
+
         <ModalBase>
+
           <FilterHeadWrap>
             <FilterHeading>{heading}</FilterHeading>
             <Ionicons
@@ -108,45 +109,46 @@ class FilterRadioModal extends Component {
               onPress={this.closeModal}
             />
           </FilterHeadWrap>
+
           <CheckWrap>
             <RadioGroup
               selectedIndex={this.state.selectedIndex}
               onSelect={(index, value) => this.onSelect(index, value)}
             >
               <RadioButton
-                style={{
-                  padding: 15,
-                }}
-                key={-1}
-                value={null}
+                  style={{ padding: 15 }}
+                  key={-1}
+                  value={null}
               >
-                <RadioText>All</RadioText>
+                <RadioText>Todas</RadioText>
               </RadioButton>
 
-              {
-                map(filterData, (item, index) => (
+              { map(filterData, (item, index) => (
                   <RadioButton
-                    style={{
-                      padding: 15,
-                    }}
-                    disabled={item.disabled}
-                    key={index}
-                    value={item.value}
+                      style={{ padding: 15 }}
+                      disabled={item.disabled}
+                      key={index}
+                      value={item.value}
                   >
                     <RadioText>{item.label || item.value}</RadioText>
                   </RadioButton>
-                ))
-              }
+                )) }
+
             </RadioGroup>
+
             <BR />
+
             <RoundButton
               buttonColor={Colors.moneyColor}
               small
-              title="Apply"
+              title="Aplicar"
               onPress={this.closeModal}
             />
+
           </CheckWrap>
+
         </ModalBase>
+
       </Modal>
     );
   }
@@ -154,12 +156,9 @@ class FilterRadioModal extends Component {
 
 FilterRadioModal.defaultProps = {
   heading: 'Filter',
-  onOpen: () => {
-  },
-  onClose: () => {
-  },
-  onClosingState: () => {
-  },
+  onOpen: () => {},
+  onClose: () => {},
+  onClosingState: () => {},
 };
 
 FilterRadioModal.propTypes = {

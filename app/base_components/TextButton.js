@@ -1,22 +1,24 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import SecondaryText from './SecondaryText';
 import PrimaryText from './PrimaryText';
+import SecondaryText from './SecondaryText';
 
-const TextButton = ({
-  title, primary, onPress, ...props
-}) => (
-  <TouchableOpacity
-    onPress={onPress}
-  >
-    {
-      primary && <PrimaryText {...props}>{title}</PrimaryText>
-    }
+/**
+ * Componente que devuelve el texto de un boton (Utilicé {RoundButton} en vez de este)
+ * @param title {String} texto del boton
+ * @param primary {Boolean} define el tipo de texto
+ * @param onPress {function} callback para el OnPress
+ * @returns {TextButton}
+ */
 
-    {
-      !primary && <SecondaryText {...props}>{title}</SecondaryText>
-    }
+const TextButton = ({ title, primary, onPress, ...props }) => (
+  <TouchableOpacity onPress={onPress} >
+
+    { primary && <PrimaryText {...props}>{title}</PrimaryText> }
+
+    { !primary && <SecondaryText {...props}>{title}</SecondaryText> }
+
   </TouchableOpacity>
 );
 
@@ -29,6 +31,5 @@ TextButton.propTypes = {
   title: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
 };
-
 
 export default TextButton;

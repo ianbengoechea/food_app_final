@@ -3,16 +3,21 @@ import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import RippleIcon from '../base_components/RippleIcon';
 
+/**
+ * {DrawerImage} componente que segun la screen en donde esté renderiza distintos iconos
+ * @comportamiento: maneja el open drawer o el pop de la screen desde la navegacion de router-flux
+ * @TODO: fijarse la navegacion que no funciona correctamente
+ */
+
 class DrawerImage extends React.Component {
   isIOS = () => Platform.OS === 'ios';
 
   render() {
-    
+
     let iconName = 'md-menu';
     let isBack = false;
     let type = 'Ionicons';
 
-    console.log('Actions.currentScene', Actions.currentScene)
     if (Actions.currentScene.includes('homeScreen')) {
       iconName = 'md-menu';
       isBack = false;
@@ -33,8 +38,7 @@ class DrawerImage extends React.Component {
         size={30}
         type={type}
         name={iconName}
-        onPress={() => {
-          if (isBack) {
+        onPress={() => {if (isBack) {
             Actions.drawerClose();
             Actions.pop();
           } else {

@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Platform } from 'react-native';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Colors from '../../src/constants/colors';
@@ -28,19 +28,30 @@ const AppBaseImage = styled.ImageBackground`
   ${Platform.OS === 'ios' ? 'padding-top: 20px;' : ''}
 `;
 
+/**
+*   AppBase es la vista general de la pantalla.
+*   @props:
+*       - {image} : imagen opcional de fondo
+*       - {children} : componentes hijos
+*       - {...props} : otras props que puedan servir (estilos)
+*/
 
 const AppBase = ({ image, children, ...props }) => (
-  image ?
-    <AppBaseImage
-      source={Assets.Images.foodBg}
-      {...props}
-    >
-      {children}
-    </AppBaseImage> :
-    <AppBaseView {...props}>
-      {children}
-    </AppBaseView>
+  image
+      ?
+        <AppBaseImage source={Assets.Images.foodBg} {...props} >
+
+            {children}
+
+        </AppBaseImage>
+      :
+        <AppBaseView {...props}>
+
+            {children}
+
+        </AppBaseView>
 );
+
 AppBase.defaultProps = {
   image: false,
 };
@@ -48,6 +59,5 @@ AppBase.defaultProps = {
 AppBase.propTypes = {
   image: PropTypes.bool,
 };
-
 
 export default AppBase;

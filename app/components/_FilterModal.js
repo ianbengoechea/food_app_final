@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
+import Modal from 'react-native-modalbox';
+import CheckBox from 'react-native-check-box';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
 import filter from 'lodash/filter';
 import styled from 'styled-components';
 import indexOf from 'lodash/indexOf';
-import Modal from 'react-native-modalbox';
-import CheckBox from 'react-native-check-box';
-import { Dimensions } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../../src/constants/colors';
 
+import Colors from '../../src/constants/colors';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+/**
+ * {_FilterModal} componente que saque de ejemplo, lo use en {FilterRadioModal}
+ * @props:
+ *        - {data} items que utiliza para hacer una lista
+ *        - {onClose} callback, envia items seleccionados del modal
+ *        - {onOpen} recibe props
+ *        - {onClosingState} callback, envia estado general del componente
+ *        - {pRef} referencia que envio desde el padre y paso al modal
+ */
 
 const ModalBase = styled.View`
   flex: 1;
@@ -40,7 +50,7 @@ const CheckWrap = styled.ScrollView`
   margin: 10px;
 `;
 
-class FilterModal extends Component {
+class _FilterModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,10 +74,15 @@ class FilterModal extends Component {
 
   onClick = (item) => {
     const newItem = { ...item, ...{ checked: !item.checked } };
+
     this.setState((s, p) => {
       const { filterData } = s;
-      const idx = indexOf(filterData, item);
-      filterData[idx] = newItem;
+
+      // busca en el array de datos que tengo el item que seleccioné
+      // si lo encuentra, guardo el index y despues lo reemplazo en el
+      // array principal (todo esto para setear el check)
+      const index = indexOf(filterData, item);
+      filterData[index] = newItem;
       return {
         filterData,
       };
@@ -131,17 +146,14 @@ class FilterModal extends Component {
   }
 }
 
-FilterModal.defaultProps = {
+_FilterModal.defaultProps = {
   heading: 'Filter',
-  onOpen: () => {
-  },
-  onClose: () => {
-  },
-  onClosingState: () => {
-  },
+  onOpen: () => {},
+  onClose: () => {},
+  onClosingState: () => {},
 };
 
-FilterModal.propTypes = {
+_FilterModal.propTypes = {
   heading: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
@@ -156,4 +168,4 @@ FilterModal.propTypes = {
   pRef: PropTypes.func.isRequired,
 };
 
-export default FilterModal;
+export default _FilterModal;

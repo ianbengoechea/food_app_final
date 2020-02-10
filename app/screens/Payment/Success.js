@@ -47,45 +47,27 @@ const Currency = styled.Text`
 `;
 
 class PaymentComplete extends Component {
-    // static navigationOptions = {
-    //     title: (<PrimaryText style={{ flex: 1 }}>Payment Complete</PrimaryText>),
-    //     headerLeft: null,
-    // };
 
     render() {
         const { totalAmount } = this.props;
-        let rupee = `${totalAmount}`;
+        let amount = `${totalAmount}`;
         let paise = '00';
-        // if (totalAmount.includes('.')) {
-        //     rupee = (`${totalAmount}`).split('.')[0];
-        //     try {
-        //         paise = (`${totalAmount}`).split('.')[1].padEnd(2, '0') || '00';
-        //     } catch (e) {
-        //         paise = '00';
-        //     }
-        // }
-
 
         return (
-            <AppBase
-                style={{
-                    backgroundColor: '#ffffff',
-                    justifyContent: 'space-evenly',
-                }}
-            >
+            <AppBase style={{ backgroundColor: '#ffffff', justifyContent: 'space-evenly'}} >
+
                 <ImageSection>
+
                     <SuccessText>Pago Exitoso</SuccessText>
                     <Image
-                        style={{
-                            width: 120,
-                            height: 120,
-                        }}
+                        style={{ width: 120, height: 120 }}
                         resizeMode="contain"
                         source={Assets.Images.paymentComplete}
                     />
 
                     <SuccessText>Tu pago ha sido aprobado!</SuccessText>
                     <Divider />
+
                 </ImageSection>
 
                 <View
@@ -97,25 +79,22 @@ class PaymentComplete extends Component {
                     }}
                 >
                     <Currency>$</Currency>
-                    <PriceText>{rupee}<CentText>.{paise}</CentText></PriceText>
+                    <PriceText>
+
+                        {amount}<CentText>.{paise}</CentText>
+
+                    </PriceText>
                 </View>
 
                 <RoundButton
-                    baseStyle={{
-                        alignSelf: 'flex-end',
-                    }}
-                    title="Back to Home"
-                    onPress={() => {
-                        Actions.reset('homeScreen');
-                    }}
+                    baseStyle={{ alignSelf: 'flex-end'}}
+                    title="Regresar"
+                    onPress={() => { Actions.reset('homeScreen') }}
                 />
+
             </AppBase>
         );
     }
 }
-
-// PaymentComplete.propTypes = {
-//     totalAmount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-// };
 
 export default PaymentComplete;

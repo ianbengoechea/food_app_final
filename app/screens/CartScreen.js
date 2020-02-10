@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {ActivityIndicator, FlatList, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
@@ -12,21 +11,22 @@ import ViewRow from '../base_components/ViewRow';
 import BR from '../base_components/BR';
 import Item from '../components/Checkout/Item';
 import PrimaryText from '../base_components/PrimaryText';
-import BillReceipt from '../components/Checkout/BillReceipt';
 
 // actions creators
 import {
     deleteCartItem,
     fetchCartItems,
     updateCartItemQty,
-    updateCartItems
 } from "../../src/actions/cartAction";
 import {createOrder} from "../../src/actions/orderActions";
 
 // firebase
 import firestore from '@react-native-firebase/firestore';
 
-import _ from 'lodash';
+/**
+ *
+ * @type {*}
+ */
 
 const FooterContainer = styled.View`
   height: 10%;
@@ -95,26 +95,11 @@ class CartScreen extends Component {
                     null
                 this.setState({loading: false})
             })
-
         }
     }
 
     componentWillUnmount(): void {
         this.unsubscribe()
-    }
-    static getDerivedStateFromProps(props, state) {
-        console.log('props', props);
-        console.log('state', state);
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        // if (nextProps.createdOrder !== null) {
-        //     const { createdOrder } = nextProps;
-        //     Actions.paymentHome({
-        //         orderId: createdOrder.id,
-        //         totalAmount: createdOrder.totalCost,
-        //     });
-        // }
     }
 
     handleItemValueChange = (item, qty) => {
@@ -135,65 +120,44 @@ class CartScreen extends Component {
                     quantity: item.qty,
                     unit_price: item.data.unit_price,
             }));
-            menu.order_details.menu_items = postData
+            menu.order_details.menu_items = postData;
             this.props.createOrder(postData, callback => callback ? this.setState({loading: true, order: callback}): null);
         }
     };
 
     _renderItem = ({item}) => {
-        // console.log('item', item)
         return (
             <Item
             key={item.id}
             name={item.data.name}
             price={`$${item.data.unit_price * item.qty}`}
             qty={item.qty}
-                onChange={qty => this.handleItemValueChange(item.data, qty)}
-        />
+            onChange={qty => this.handleItemValueChange(item.data, qty)}
+            />
         )
     };
 
     renderCartItems = (cartData) => {
-        // console.log('cartData', cartData)
+
         if (cartData.length > 0) {
             return (
                 <FlatList
-                    style={{
-                        elevation: 2,
-                        borderWidth: 1,
-                        borderColor: '#fcfcfc',
-                    }}
+                    style={{ borderWidth: 1, borderColor: '#fcfcfc' }}
                     data={cartData}
                     renderItem={this._renderItem}
                     keyExtractor={item => item.id}
                 />
             );
+
         } else {
             return (
                 <ViewRow>
                     <PrimaryText>
-                        Your Cart is empty.
+                        Tu carrito se encuentra vacío.
                     </PrimaryText>
                 </ViewRow>
             );
         }
-    };
-
-    renderBillReceipt = (billInfo) => {
-        const {cartData} = this.props;
-
-        if (cartData.length > 0) {
-            return (
-                <BillReceipt
-                    style={{
-                        borderTopWidth: 4,
-                        borderTopColor: '#eee',
-                    }}
-                    billInfo={billInfo}
-                />
-            );
-        }
-        return null;
     };
 
     renderFooter = (totalAmount) => {
@@ -206,9 +170,7 @@ class CartScreen extends Component {
                         <PrimaryText> $ {totalAmount}</PrimaryText>
                     </AmountContainer>
 
-                        <PayButton
-                            onPress={() => this.handlePayment(totalAmount)}
-                        >
+                        <PayButton onPress={() => this.handlePayment(totalAmount)}>
                             {this.state.loading
                                 ?
                                 <ActivityIndicator size="large" color="#fff"/>
@@ -226,27 +188,25 @@ class CartScreen extends Component {
 
     render() {
         const {cartData} = this.props;
+
         if (cartData) {
             let totalBill = parseFloat(cartData.reduce(
                     (total, item) => total + (item.data.unit_price * item.qty), 0,
                 ));
 
-
-
             return (
-                <AppBase
-                    style={{
-                        alignItems: 'stretch',
-                    }}
-                >
+                <AppBase style={{ alignItems: 'stretch' }} >
+
                     <ScrollView>
+
                         <BR size={10}/>
                         {this.renderCartItems(cartData)}
                         <BR/>
-                        {/*{this.renderBillReceipt(billInfo)}*/}
-                        <BR/>
+
                     </ScrollView>
+
                     {this.renderFooter(totalBill)}
+
                 </AppBase>
             );
         }
@@ -282,5 +242,5 @@ function MapDispatchToProps(dispatch) {
         createOrder,
     }, dispatch);
 }
-//
+
 export default connect(MapStateToProps, MapDispatchToProps)(CartScreen);

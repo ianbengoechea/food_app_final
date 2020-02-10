@@ -14,9 +14,10 @@ import AppBase from '../base_components/AppBase';
 import PrimaryText from '../base_components/PrimaryText';
 
 import RightHeaderButtons from '../components/RightHeaderButtons';
-import CuisineGrid from '../components/CuisineGrid';
+import TipoCocina from '../components/TipoCocina';
 import RestaurantList from '../components/RestaurantList';
 import FilterRadioModal from '../components/FilterRadioModal';
+import AppMem from "../common/AppMem";
 
 
 class HomeScreen extends Component {
@@ -31,39 +32,16 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-
-    // call action creator for retrieve all restaurants
-    this.props.fetchRestaurant()
-    console.log('this.props.restaurantList', this.props.restaurantList)
-
-    console.log('home screen >>>', Actions.currentScene)
-    // const { restaurantList, cuisineTypes } = this.props;
-    // if (!restaurantList || restaurantList.length === 0) {
-    //   this.props.fetchRestaurant();
-    // }
-
-    // if (!cuisineTypes || cuisineTypes.length === 0) {
-    //   this.props.fetchCuisineTypes();
-    // }
+    this.props.fetchRestaurant();
   }
 
   handleFilter = (type) => {
-    if (type !== null) {
-      this.props.fetchRestaurantByType(type);
-    } else {
-      this.props.fetchRestaurant();
-    }
+    console.log('tipo de cocina seleccionada', type)
   };
 
   openCuisineScreen = (value) => {
     console.log('value', value)
-    // Actions.cuisineRestaurants({
-    //   cuisineType: value,
-    //   backTitle: 'Back',
-    //   title: startCase(value),
-    //   rightTitle: 'Sign Out',
-    //   onRight: () => this.handleSignOut(),
-    // });
+    // TODO: abrir una nueva screen con los restaurantes que cumplan la condicion
   };
 
   render() {
@@ -75,24 +53,20 @@ class HomeScreen extends Component {
 
     return (
 
-      <AppBase style={{
-        alignItems: 'stretch',
-        backgroundColor: '#ffffff',
-      }}
+      <AppBase style={{ alignItems: 'stretch', backgroundColor: '#ffffff' }}
       >
         {
           filterData.length > 0 &&
           <FilterRadioModal
-            heading="Cuisine Type"
+            heading="Filtrar por tipo de cocina"
             data={filterData}
-            // eslint-disable-next-line no-return-assign
-            pRef={el => (this.filterModalRef = el)}
+            pRef={el => this.filterModalRef = el}
             close={() => this.filterModalRef.close()}
             onClose={this.handleFilter}
           />
         }
         <ScrollView >
-          <CuisineGrid
+          <TipoCocina
             data={this.props.cuisineTypes}
             onPress={this.openCuisineScreen}
           />
@@ -108,16 +82,7 @@ class HomeScreen extends Component {
 
 HomeScreen.defaultProps = {
   restaurantList: [],
-  cuisineTypes: ['chinese', 'south-indian', 'beverages', 'north-indian', 'biryanis', 'desserts', 'ice-creams', 'mexican', 'pizza']
-};
-
-HomeScreen.propTypes = {
-  fetchRestaurant: PropTypes.func.isRequired,
-  fetchRestaurantByType: PropTypes.func.isRequired,
-  fetchCuisineTypes: PropTypes.func.isRequired,
-  // fetchCartItems: PropTypes.func.isRequired,
-  restaurantList: PropTypes.array,
-  cuisineTypes: PropTypes.array,
+  cuisineTypes: ['china', 'bebidas', 'india', 'postres', 'helado', 'mexicana', 'pizza']
 };
 
 const MapStateToProps = (store) => {

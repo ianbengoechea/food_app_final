@@ -36,6 +36,7 @@ class RestaurantInfoScreen extends Component {
             ListHeaderComponent={this.renderHeader}
             keyExtractor={item => item.id}
             renderItem={this.renderFoodItem}
+            ListEmptyComponent={this.renderFoodItem}
         />
     );
 
@@ -69,6 +70,10 @@ class RestaurantInfoScreen extends Component {
                     onPress={() => this.props.updateCartItems(item, 1)}
                 />
             );
+        } else if (!item) {
+            return (
+                <FoodItem/>
+            );
         }
         return null;
     };
@@ -76,16 +81,15 @@ class RestaurantInfoScreen extends Component {
     render() {
         const { restaurant: { name: restaurantName, details, foods, store_image, description } } = this.props;
         return (
-            <View
-            >
+            <View>
                 <ScrollView>
                     <Image
                         source={{uri: `data:image/jpeg;base64,${store_image}`}}
+                        resizeMode="cover"
                         style={{
                             width: 'auto',
                             height: 200,
                         }}
-                        resizeMode="cover"
                     />
                     <View
                         style={{
@@ -95,10 +99,11 @@ class RestaurantInfoScreen extends Component {
                         }}
                     >
                         <PrimaryText align="left" size={20}>{restaurantName}</PrimaryText>
-                        {/*<BR size={5} />*/}
                         <SecondaryText align="left" size={14}>{description}</SecondaryText>
                     </View>
+
                     {this.renderFoodList(this.props.restaurantMenu)}
+
                 </ScrollView>
             </View>
         );

@@ -7,6 +7,8 @@ import AppBase from '../base_components/AppBase';
 
 import { Left, Right, List, ListItem, Icon } from 'native-base';
 
+// TODO: este componente solo anda si lo pongo directo en la clase que quiero usar, no funciona global
+
 class SideDrawer extends Component {
 
   componentDidMount() {

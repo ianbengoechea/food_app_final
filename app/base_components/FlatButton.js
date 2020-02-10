@@ -62,7 +62,6 @@ FlatButton.defaultProps = {
 
 FlatButton.propTypes = {
   darkTheme: PropTypes.bool,
-  // eslint-disable-next-line react/forbid-prop-types
   style: PropTypes.object,
   title: PropTypes.string.isRequired,
   color: PropTypes.string,

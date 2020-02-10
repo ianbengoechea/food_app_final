@@ -1,17 +1,21 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
-import { FlatList, Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
+import {ScrollView} from "react-navigation";
 import PropTypes from 'prop-types';
 import startCase from 'lodash/startCase';
 
-
-import Assets from '../../src/constants/assets';
 import PrimaryText from '../base_components/PrimaryText';
 import ViewRow from '../base_components/ViewRow';
-import {ScrollView} from "react-navigation";
+import Assets from '../../src/constants/assets';
 
-class CuisineGrid extends Component {
+/**
+ *
+ */
+
+class TipoCocina extends Component {
+
   renderHeader = () => (
+
     <ViewRow
       jc="space-between"
       ai="center"
@@ -26,24 +30,19 @@ class CuisineGrid extends Component {
       <PrimaryText
         size={18}
         align="left"
-        style={{
-          flex: 1,
-        }}
+        style={{ flex: 1}}
       >
-        Dishes
+        Comidas
       </PrimaryText>
     </ViewRow>);
 
-  renderItem = ( lista ) => {
-      return lista.map(item => {
+  renderItem = ( platos ) => {
+      return platos.map(item => {
           return (
               <TouchableOpacity
                   activeOpactiy={0.3}
-                  style={{
-                      width: '100%',
-                      flex: 1,
-                  }}
-                  onPress={() => this.props.onPress(item)}
+                  style={{ width: '100%', flex: 1, marginTop: 5 }}
+                  onPress={() => this.props.onPress(console.log('plato seleccionado >>', item))}
               >
                   <View
                       style={{
@@ -57,8 +56,6 @@ class CuisineGrid extends Component {
                           height: '100%',
                           borderWidth: 1,
                           borderColor: '#f2f2f2',
-                          elevation: 2,
-                          backgroundColor: '#fafafa',
                       }}
                   >
                       <Image
@@ -69,15 +66,15 @@ class CuisineGrid extends Component {
                           }}
                           resizeMode="contain"
                       />
-                      <View
 
-                      />
-                      <PrimaryText style={{
-                          marginTop: 20,
-                      }}
-                      >
+                      <View/>
+
+                      <PrimaryText style={{ marginTop: 5 }} >
+
                           {startCase(item)}
+
                       </PrimaryText>
+
                   </View>
               </TouchableOpacity>
           )
@@ -85,20 +82,26 @@ class CuisineGrid extends Component {
   };
 
   render() {
+      const tipoPlato = this.props.data;
     return (
         <View>
+
             {this.renderHeader()}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {this.renderItem(this.props.data)}
-      </ScrollView>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+                {this.renderItem(tipoPlato)}
+
+            </ScrollView>
+
         </View>
     );
   }
 }
 
-CuisineGrid.propTypes = {
-  onPress: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+TipoCocina.propTypes = {
+    onPress: PropTypes.func.isRequired,
+    data: PropTypes.array.isRequired,
 };
 
-export default CuisineGrid;
+export default TipoCocina;

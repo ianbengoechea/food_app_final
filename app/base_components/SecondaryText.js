@@ -9,5 +9,4 @@ const SecondaryText = styled.Text`
   font-size: ${props => (props.size ? props.size : '16px')};
 `;
 
-
 export default SecondaryText;

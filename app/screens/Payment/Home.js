@@ -1,24 +1,14 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import { Dimensions, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
-
-import styled from 'styled-components';
-import debounce from 'lodash/debounce';
-import Stripe from 'react-native-stripe-api';
-import { CreditCardInput } from 'react-native-credit-card-input';
-import PropTypes from 'prop-types';
-
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
+import { CreditCardInput } from 'react-native-credit-card-input';
+import styled from 'styled-components';
+import Stripe from 'react-native-stripe-api';
 
 import Colors from '../../../src/constants/colors';
 import RoundButton from '../../base_components/RoundButton';
 import AppBase from '../../base_components/AppBase';
 import BR from '../../base_components/BR';
-import PrimaryText from '../../base_components/PrimaryText';
-// import { doCancelOrder } from '../../../src/actions';
 
 const windowWidth = Dimensions.get('window').width - 18;
 
@@ -50,25 +40,6 @@ const SectionItem = styled.View`
 `;
 
 class PaymentHome extends Component {
-    // static navigationOptions = ({ navigation }) => ({
-    //     headerTitle: <PrimaryText>Food App</PrimaryText>,
-    // })
-    // static navigationOptions = {
-    //     title: (<PrimaryText style={{ flex: 1 }}> Make Payment</PrimaryText>),
-    //     headerStyle: {
-    //         backgroundColor: '#f5f5f5',
-    //         borderBottomWidth: 1,
-    //         borderStyle: 'solid',
-    //         borderColor: '#fcfcfc',
-    //     },
-    //     headerTintColor: '#000',
-    //     headerTitleStyle: {
-    //         fontWeight: 'bold',
-    //     },
-    //     headerBackTitle: 'Home',
-    //     headerLeft: null,
-    // };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -86,8 +57,7 @@ class PaymentHome extends Component {
     }
 
     _onChange = (form) => {
-        console.log('form', form);
-        console.log('form.valid', form.valid)
+
         this.setState((s, p) => ({
             cardData: form,
             validData: form.valid,
@@ -107,7 +77,6 @@ class PaymentHome extends Component {
         const expMonth = cardValue.expiry.split('/')[0];
         const expYear = cardValue.expiry.split('/')[1];
         // Create a Stripe token with new card infos
-        const touken = setTimeout('hola', 3000)
         const token = await client.createToken({
             number: cardValue.number.replace(' ', ''),
             exp_month: expMonth,
@@ -115,22 +84,12 @@ class PaymentHome extends Component {
             cvc: cardValue.cvc,
             address_zip: cardValue.postalCode,
         });
+        setTimeout( () => Actions.paymentSuccess({totalAmount} ), 3000)
 
-        console.log(token);
-
-        if (touken) {
-            Actions.paymentSuccess({
-                totalAmount,
-            });
-        } else {
-            Actions.paymentFailed({
-                totalAmount,
-            });
-        }
     };
 
     handleCancelOrder = () => {
-        this.props.doCancelOrder();
+        console.log('CANCELA PAGO CON TARJETA')
     };
 
     render() {
@@ -139,85 +98,79 @@ class PaymentHome extends Component {
         return (
             <AppBase>
 
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : ''}
-                >
-                    <ScrollView
-                        bounces={false}
-                    >
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} >
+
+                    <ScrollView bounces={false} >
+
                         <BR size={10} />
+
                         <Section>
+
                             <SectionItem>
-                                <Heading>{'Order Id'.toUpperCase()}</Heading>
+                                <Heading>{'Id Orden'.toUpperCase()}</Heading>
                                 <SubHeading>{orderId}</SubHeading>
                             </SectionItem>
+
                         </Section>
 
                         <Section>
+
                             <SectionItem>
-                                <Heading>SELLER</Heading>
+                                <Heading>LUGAR</Heading>
                                 <SubHeading>{ nameRest }</SubHeading>
                             </SectionItem>
+
                             <SectionItem>
-                                <Heading>PRICE</Heading>
+                                <Heading>PRECIO</Heading>
                                 <SubHeading>$ {totalAmount}</SubHeading>
                             </SectionItem>
+
                         </Section>
 
-                        <Section style={{
-                            elevation: 2,
-                            borderBottomWidth: 2,
-                            borderBottomColor: '#eee',
-                        }}
-                        >
+                        <Section style={{ borderBottomWidth: 2, borderBottomColor: '#eee' }} >
+
                             <SectionItem>
-                                <Heading>DATE</Heading>
+                                <Heading>FECHA</Heading>
                                 <SubHeading>{new Date().toDateString()}</SubHeading>
                             </SectionItem>
+
                         </Section>
 
-                        <View style={{
-                            marginTop: 20,
-                        }}
-                        >
+                        <View style={{ marginTop: 20 }} >
+
                             <CreditCardInput
-                                    requiresCVC
-                                    cardScale={1}
-                                    inputContainerStyle={{
-                                        backgroundColor: '#FFF',
-                                        paddingTop: 5,
-                                        paddingBottom: 5,
-                                        flexDirection: 'column',
-                                        paddingLeft: 5,
-                                        paddingRight: 5,
-                                        borderWidth: 1,
-                                        borderColor: '#eee',
-                                        minWidth: 150,
-                                        borderRadius: 6,
-                                    }}
-                                    onChange={debounce(this._onChange, 500)}
-                                />
+                                requiresCVC
+                                cardScale={1}
+                                inputContainerStyle={{
+                                    backgroundColor: '#FFF',
+                                    paddingTop: 5,
+                                    paddingBottom: 5,
+                                    flexDirection: 'column',
+                                    paddingLeft: 5,
+                                    paddingRight: 5,
+                                    borderWidth: 1,
+                                    borderColor: '#eee',
+                                    minWidth: 150,
+                                    borderRadius: 6,
+                                }}
+                                onChange={this._onChange}
+                            />
+
                         </View>
 
                         <RoundButton
                             loading={this.state.loadingPayment}
-                            title="Make Payment"
+                            title="Realizar pago"
                             buttonColor={Colors.green}
                             onPress={() => this.doPayment()}
                             disabled={!this.state.validData}
-                            baseStyle={{
-                                marginTop: 30,
-                                marginBottom: Platform.OS === 'ios' ? 100 : 20,
-                            }}
+                            baseStyle={{ marginTop: 30, marginBottom: Platform.OS === 'ios' ? 100 : 20 }}
                         />
 
                         <RoundButton
-                            title="Cancel Order"
+                            title="Cancelar orden"
                             onPress={() => this.handleCancelOrder()}
-                            baseStyle={{
-                                marginTop: 30,
-                                marginBottom: Platform.OS === 'ios' ? 100 : 20,
-                            }}
+                            baseStyle={{ marginTop: 30, marginBottom: Platform.OS === 'ios' ? 100 : 20 }}
                         />
 
                     </ScrollView>
@@ -231,25 +184,4 @@ PaymentHome.defaultProps = {
     createdOrder: null,
 };
 
-PaymentHome.propTypes = {
-    orderId: PropTypes.number.isRequired,
-    totalAmount: PropTypes.number.isRequired,
-    doCancelOrder: PropTypes.func.isRequired,
-    createdOrder: PropTypes.object,
-};
-
-// function initMapStateToProps(state) {
-//     return {
-//         createdOrder: state.orders.createdOrder,
-//     };
-// }
-//
-// function initMapDispatchToProps(dipatch) {
-//     return bindActionCreators({
-//         doCancelOrder,
-//     }, dipatch);
-// }
-//
-//
-// export default connect(initMapStateToProps, initMapDispatchToProps)(PaymentHome);
 export default PaymentHome;

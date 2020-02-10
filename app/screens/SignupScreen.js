@@ -1,7 +1,4 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 
@@ -19,7 +16,8 @@ class SignupScreen extends Component {
 
   handleSignUpSubmit = () => {
     const { email, password } = this.state;
-    this.props.authRegister(email, password);
+    // this.props.authRegister(email, password);
+    console.log('email y password', email, password)
   };
 
   handleEmailChange = (email) => {
@@ -58,26 +56,4 @@ SignupScreen.defaultProps = {
   registerLoading: false,
 };
 
-SignupScreen.propTypes = {
-  registerMessage: PropTypes.object,
-  registerLoading: PropTypes.bool,
-  registerError: PropTypes.object,
-  authRegister: PropTypes.func.isRequired,
-};
-
-// function initMapStateToProps(state) {
-//   return {
-//     registerMessage: state.auth.registerMessage,
-//     registerError: state.auth.registerError,
-//     registerLoading: state.auth.registerLoading,
-//   };
-// }
-
-// function initMapDispatchToProps(dispatch) {
-//   return bindActionCreators({
-//     authRegister,
-//   }, dispatch);
-// }
-
-// export default connect(initMapStateToProps, initMapDispatchToProps)(SignupScreen);
 export default SignupScreen;
