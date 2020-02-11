@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-
 import CounterButton from './CounterButton';
 import PrimaryText from '../../base_components/PrimaryText';
 
@@ -32,18 +31,16 @@ const PriceText = styled.Text`
   text-align: right;
 `;
 
-const Item = ({
-  name, price, onChange, qty,
-}) => (
-  <Container>
-    <NameView>
-      <PrimaryText size={14} align="left">{name}</PrimaryText>
-    </NameView>
-    <RightSection>
-      <CounterButton onChange={onChange} qty={qty} />
-      <PriceText>{price}</PriceText>
-    </RightSection>
-  </Container>
+const Item = ({ name, price, onChange, qty }) => (
+    <Container>
+        <NameView>
+          <PrimaryText size={14} align="left">{name}</PrimaryText>
+        </NameView>
+        <RightSection>
+          <CounterButton onChange={onChange} qty={qty} />
+          <PriceText>{price}</PriceText>
+        </RightSection>
+    </Container>
 );
 
 Item.propTypes = {
@@ -52,6 +49,5 @@ Item.propTypes = {
   onChange: PropTypes.func.isRequired,
   qty: PropTypes.number.isRequired,
 };
-
 
 export default Item;

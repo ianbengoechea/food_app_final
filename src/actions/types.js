@@ -15,7 +15,6 @@ export const RESTAURANT_FETCH_BY_ID = 'RESTAURANT_FETCH_BY_ID';
 export const RESTAURANT_FETCH_BY_TYPE = 'RESTAURANT_FETCH_BY_TYPE';
 
 // CART ACTION
-
 export const cartActions = {
     FETCH_CART_ITEMS: 'FETCH_CART_ITEMS',
     UPDATE_CART_ITEM: 'UPDATE_CART_ITEM',
@@ -27,7 +26,6 @@ export const cartActions = {
 }
 
 // ORDER ACTION
-
 export const orderActions = {
     CREATE_ORDER: 'CREATE_ORDER',
     CREATE_ORDER_SUCCESS: 'CREATE_ORDER_SUCCESS',

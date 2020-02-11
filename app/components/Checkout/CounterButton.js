@@ -9,21 +9,21 @@ const Container = styled.View`
   flex-direction: row;
   border-color: #d9d9d9;
   border-width: 1px;
-  padding: 4%;
+  padding: 10px;
   justify-content: space-between;
   align-items: center;
 `;
 
 const DecreaseButton = styled.TouchableOpacity`
-  padding: 2%;
+  padding: 2px;
 `;
 
 const IncreaseButton = styled.TouchableOpacity`
-  padding: 2%;
+  padding: 2px;
 `;
 
 const CounterContainer = styled.View`
-  padding-horizontal: 10%;
+  padding-horizontal: 15px;
 `;
 
 const CounterText = styled.Text`

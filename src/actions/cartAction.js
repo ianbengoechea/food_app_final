@@ -18,20 +18,26 @@ export const fetchCartItems = () => ({
 //     },
 // });
 
+/**
+ *
+ * @param data => actual item
+ * @param qty => actual qty seleccionada
+ * @returns {to reducer => newCart}
+ */
 export const updateCartItems = (data, qty) => {
     return (dispatch, getState) => {
         try {
-            console.log('UPDATE_CART_ITEM')
+            // console.log('UPDATE_CART_ITEM')
             const currentCart = getState().cart.cartData;
             const payload  = { data, qty};
             const newCart = deDupeItems([...currentCart, ...[payload]]) || [];
-
-            console.log("...currentCart", ...currentCart)
-            console.log("...[payload]", ...[payload])
-
-            console.log('newCart', newCart)
-            console.log('currentCart', currentCart)
-            console.log('data', data)
+            //
+            // console.log("...currentCart", ...currentCart)
+            // console.log("...[payload]", ...[payload])
+            //
+            // console.log('newCart', newCart)
+            // console.log('currentCart', currentCart)
+            // console.log('data', data)
 
             dispatch({
                 type: cartActions.SAVE_NEW_CART,
@@ -44,17 +50,21 @@ export const updateCartItems = (data, qty) => {
     };
 };
 
-
+/**
+ * @param id => data de la orden
+ * @param qty => cantidad que selecciona (usada para comparar la qty actual con la que viene)
+ * @returns {newCart}
+ */
 export const updateCartItemQty = (id, qty) => {
     return (dispatch, getState) => {
         try {
             const currentCart = getState().cart.cartData;
-            console.log('UPDATE_CART_ITEM_QTY')
-            console.log('id >>', id);
-            console.log('qty >>', qty)
+            // console.log('UPDATE_CART_ITEM_QTY')
+            // console.log('id >>', id);
+            // console.log('qty >>', qty)
 
             const newCart = currentCart.map( o => {
-                console.log('currentCart.map >> object >>>', o)
+                // console.log('currentCart.map >> object >>>', o)
                 if ( o.data.id === id ) {
                     const newO = o;
                     newO.qty = qty;
@@ -63,7 +73,7 @@ export const updateCartItemQty = (id, qty) => {
                 return o;
             })
 
-            console.log('newCart >>', newCart)
+            // console.log('newCart >>', newCart)
 
             dispatch({
                 type: cartActions.UPDATE_CART_ITEM_QTY,

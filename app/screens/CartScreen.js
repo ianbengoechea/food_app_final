@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, FlatList, ScrollView} from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, Modal, View, Text, TextField } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions } from 'react-native-router-flux';
@@ -22,6 +22,7 @@ import {createOrder} from "../../src/actions/orderActions";
 
 // firebase
 import firestore from '@react-native-firebase/firestore';
+import ModalWrapper from "react-native-modal-wrapper";
 
 /**
  *
@@ -79,7 +80,7 @@ class CartScreen extends Component {
 
         this.state = {
             loading: false,
-            order: {}
+            order: {},
         }
     }
     componentDidMount() {
@@ -98,7 +99,7 @@ class CartScreen extends Component {
         }
     }
 
-    componentWillUnmount(): void {
+    componentWillUnmount() {
         this.unsubscribe()
     }
 
@@ -111,6 +112,7 @@ class CartScreen extends Component {
     };
 
     handlePayment = (totalAmount) => {
+
         const {cartData} = this.props;
 
         if (cartData.length > 0) {
